@@ -1,0 +1,50 @@
+<script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "{$mybb->settings['myimg_api']}",
+    authDomain: "{$mybb->settings['myimg_authdomain']}",
+    databaseURL: "{$mybb->settings['myimg_databaseurl']}",
+    projectId: "{$mybb->settings['myimg_id']}",
+    storageBucket: "{$mybb->settings['myimg_storagebucket']}",
+    messagingSenderId: "{$mybb->settings['myimg_messagingsenderid']}"
+  };
+  firebase.initializeApp(config);
+  
+  var storage = firebase.storage();
+  var progress = document.getElementById('uploadProgress')
+  var button = document.getElementById('uploadButton')
+
+  var tg = document.getElementById('textganti')
+
+  button.addEventListener('change', function(e){
+  var file = e.target.files[0];
+  var storageRef = storage.ref('other/' + file.name)
+  var uploadTask = storageRef.put(file)
+  
+  uploadTask.on('state_changed', loadUpload, errUpload, completeUpload)
+  
+  function loadUpload(data){
+	progress.classList.remove('hiddenrow');
+	tg.innerHTML = file.name;
+  }
+  
+  function errUpload(err){
+	console.log('error')
+	console.log(err)
+  }
+  
+  function completeUpload(data){
+	storageRef.getDownloadURL().then(function(url){
+	progress.classList.add('hiddenrow');
+	MyBBEditor.insert('[img]' + url + '[/img]');
+	button.value = "";
+	tg.innerHTML = '<img src="images/MyImg/upload.png"> Browse or Drop images here';
+	console.log(url)
+	})
+	console.log('success')
+	console.log(data)
+  }
+  
+  })
+</script>

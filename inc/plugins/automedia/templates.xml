@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<automedia>
+    <template>
+        <title>automedia_usercp</title>
+        <tpl><![CDATA[<html>
+    <head>
+        <title>{$mybb->settings['bbname']} - {$lang->av_ucp_title}</title>
+        {$headerinclude}
+    </head>
+    <body>
+        {$header}
+        <form action="usercp.php" method="post">
+        <table width="100%" border="0" align="center">
+            <tr>
+                {$usercpnav}
+                <td valign="top">
+                    <table border="0" cellspacing="{$theme['borderwidth']}" cellpadding="{$theme['tablespace']}" class="tborder">
+                        <tr>
+                            <td class="thead" colspan="3"><strong>{$lang->av_ucp_title}</strong></td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="trow1" width="60%">
+                                {$lang->av_ucp_label}
+                            </td>
+                            <td class="trow1" width="20%">
+                                <input type="hidden" name="my_post_key" value="{$mybb->post_code}" />
+                                <input type="radio" name="automedia" value="Y"{$av_checked_yes} />{$lang->av_ucp_yes}<br />
+                                <input type="radio" name="automedia" value="N"{$av_checked_no} />{$lang->av_ucp_no}
+                            </td>
+                            <td align="center" class="trow1" width="20%">
+                                <div>{$ucpset}</div>
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    <div align="center">
+                    <input type="hidden" name="action" value="do_automedia" />
+                    <input type="submit" class="button" name="submit" value="{$lang->av_ucp_submit}" />
+                    </div>
+                </td>
+            </tr>
+        </table>
+        </form>
+        {$footer}
+    </body>
+</html>]]></tpl>
+    </template>
+    <template>
+        <title>automedia_footer</title>
+        <tpl><![CDATA[<script type="text/javascript">
+<!--
+    AM_EMBEDLY = {$embedly};
+    AM_URLEMBED = {$urlembed};
+    AM_SCRIPT = "{$current_page}";
+    AM_MAXWIDTH = {$mybb->settings['av_width']};
+    AM_MAXHEIGHT = {$mybb->settings['av_height']};
+    AM_ACTIVE = {$am_active};
+    AM_GROUPS = {$am_groups};
+    AM_FORUMS = {$am_forums};
+    AM_SPECIAL = {$am_special};
+    AM_LOCAL = {$mybb->settings['av_local']};
+    AM_SIGNATURE = {$mybb->settings['av_signature']};
+    AM_EDITSIG = {$editsig};
+    AM_PATH = "{$mybb->settings['bburl']}";
+    AM_DLLINK = {$mybb->settings['av_attachdl']};
+    AM_ATTACH = {$am_attach};
+    AM_QUOTES = {$mybb->settings['av_quote']};
+    // Theme of embed.ly cards. Default: 'light'  - for dark themes set to 'dark'
+    AM_CARDTHEME = 'light';
+    // Time out for reload after quick reply and quick edit
+    AM_TIMEOUT = 1500;
+-->
+</script>
+<script type="text/javascript" src="{$mybb->asset_url}/jscripts/automedia/build/mediaelement-and-player.min.js?ver={$automedia_version}"></script>
+<script type="text/javascript" src="{$mybb->asset_url}/jscripts/automedia/mep-feature-playlist.js?ver={$automedia_version}"></script>
+<script type="text/javascript" src="{$mybb->asset_url}/jscripts/automedia/automedia.min.js?ver={$automedia_version}"></script>
+{$embedscript}]]></tpl>
+    </template>
+    <template>
+        <title>automedia_player_styles</title>
+        <tpl><![CDATA[<link rel="stylesheet" href="{$mybb->asset_url}/jscripts/automedia/build/mediaelementplayer.css?ver={$automedia_version}" />
+<link rel="stylesheet" href="{$mybb->asset_url}/jscripts/automedia/mep-feature-playlist.css?ver={$automedia_version}" />]]></tpl>
+    </template>
+    <template>
+        <title>automedia_codebuttons</title>
+        <tpl><![CDATA[<br />
+<img id="amoff" src="{$mybb->asset_url}/images/amoff.png" width="28" height="28" alt="{$amoff}" title="{$amoff}" />&nbsp;&nbsp;
+<img id="ampl" src="{$mybb->asset_url}/images/ampl.png" width="28" height="28" alt="{$ampl}" title="{$ampl}" /><br /><br />]]></tpl>
+    </template>
+    <template>
+        <title>automedia_codebuttons_private</title>
+        <tpl><![CDATA[<br />
+<img id="amoff" src="{$mybb->asset_url}/images/amoff.png" width="28" height="28" alt="{$amoff}" title="{$amoff}" />&nbsp;&nbsp;
+<img id="ampl" src="{$mybb->asset_url}/images/ampl.png" width="28" height="28" alt="{$ampl}" title="{$ampl}" /><br /><br />]]></tpl>
+    </template>
+    <template>
+        <title>automedia_codebuttons_footer</title>
+        <tpl><![CDATA[<script type="text/javascript" src="{$mybb->asset_url}/jscripts/automedia/rangyinputs_jquery.min.js?ver={$automedia_version}"></script>
+<script type="text/javascript">
+<!--
+jQuery(document).ready(function($)
+{
+    $("#amoff").on("click", function() {
+        if(!MyBBEditor) {
+            $("#message, #signature").surroundSelectedText("[amoff]", "[/amoff]");
+        } else {
+            MyBBEditor.insert('[amoff]', '[/amoff]');
+        }
+    });
+    $("#ampl").on("click", function() {
+        playlist = '';
+        do
+        {
+            thing = prompt("Insert URL", '');
+            if (thing != '' && thing != null)
+            {
+              playlist = playlist + '[source]"' + thing + '" title=""[/source]\n';
+            }
+        }
+        while(thing != '' && thing != null)
+
+        if(playlist == '') { return; }
+        playlist = '[amplist]\n' + playlist + '[/amplist]\n';
+        if(!MyBBEditor) {
+            $("#message, #signature").focus();
+            $("#message, #signature").surroundSelectedText("", playlist, true);
+        } else {
+            MyBBEditor.insert(playlist);
+        }
+    });
+});
+-->
+</script>]]></tpl>
+    </template>
+    <template>
+        <title>automedia_ucpstatus_up</title>
+        <tpl><![CDATA[&nbsp;<b>{$lang->av_ucp_status}</b><br /> <img src="{$mybb->asset_url}/images/icons/thumbsup.png" alt="{$lang->av_ucp_yes}" />]]></tpl>
+    </template>
+    <template>
+        <title>automedia_ucpstatus_down</title>
+        <tpl><![CDATA[&nbsp;<b>{$lang->av_ucp_status}</b><br /> <img src="{$mybb->asset_url}/images/icons/thumbsdown.png" alt="{$lang->av_ucp_no}" />]]></tpl>
+    </template>
+    <template>
+        <title>automedia_ucp_menu</title>
+        <tpl><![CDATA[<tbody><tr><td class="trow1 smalltext"><a href="usercp.php?action=userautomedia" class="usercp_nav_item usercp_nav_options">{$lang->av_ucp_menu}</a></td></tr></tbody>]]></tpl>
+    </template>
+</automedia>
