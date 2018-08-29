@@ -30,7 +30,8 @@
 		// -->
 		</script>
 		<!-- JavaScript Includes -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+		<!-- https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js -->
+		<script src="assets/js/jquery.1.9.1.min.js" type="text/javascript"></script>
 		<script src="assets/js/jquery.knob.js" type="text/javascript"></script>
 
 		<!-- jQuery File Upload Dependencies -->
